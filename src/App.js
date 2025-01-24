@@ -5,17 +5,17 @@ function App() {
  const [hoveredItem, setHoveredItem] = useState(null);
  
  const menuItems = [
-   { id: 'preview-nymph', text: '용광로의 부활', bgImage: '${process.env.PUBLIC_URL}/images/event-nymph.jpg', link: 'https://gall.dcinside.com/m/mibj/5212701' },
-   { id: 'preview-roguelike-sarkaz', text: '통합전략#5 살카즈의 영원한 불가사의', bgImage: '${process.env.PUBLIC_URL}/images/event-roguelike-sarkaz.png' },
-   { id: 'preview-concert-2024-ii', text: 'Ambience Synesthesia 2024 II', bgImage: '${process.env.PUBLIC_URL}/images/event-concert-2024-ii.jpg' },
-   { id: 'preview-dungeon-meshi', text: '테라밥', bgImage: '${process.env.PUBLIC_URL}/images/event-dungeon-meshi.jpg', link: 'https://gall.dcinside.com/m/mibj/5436645' },
-   { id: 'preview-moon', text: '아름다운때에 달을 맞이한다', bgImage: '${process.env.PUBLIC_URL}/images/event-moon.jpg', link: 'https://gall.dcinside.com/m/mibj/5459774' },
-   { id: 'preview-black-money-rerun', text: '부정축재 재개방', bgImage: '${process.env.PUBLIC_URL}/images/event-black-money-rerun.jpg', link: 'https://gall.dcinside.com/m/mibj/5459920' },
-   { id: 'preview-vector', text: '벡터 브레이크스루', bgImage: '${process.env.PUBLIC_URL}/images/event-vector-breakthrough.jpg', link: 'https://gall.dcinside.com/m/mibj/5461517' },
-   { id: 'preview-west', text: '해 지는 곳을 따라서', bgImage: '${process.env.PUBLIC_URL}/images/event-west.jpg', link: 'https://gall.dcinside.com/m/mibj/5462923' },
-   { id: 'preview-ggozzil', text: '벨벳의 폭로자들', bgImage: '${process.env.PUBLIC_URL}/images/event-ggozzil.jpg' },
-   { id: 'preview-stronghold', text: '방어협정', bgImage: '${process.env.PUBLIC_URL}/images/event-stronghold.jpg' },
-   { id: 'preview-wife-rerun', text: '츠빌링슈튀르메의 가을 재개방', bgImage: '${process.env.PUBLIC_URL}/images/event-wife-rerun.jpg' },
+   { id: 'preview-nymph', text: '용광로의 부활', bgImage: `${process.env.PUBLIC_URL}/images/event-nymph.jpg`, link: 'https://gall.dcinside.com/m/mibj/5212701' },
+   { id: 'preview-roguelike-sarkaz', text: '통합전략#5 살카즈의 영원한 불가사의', bgImage: `${process.env.PUBLIC_URL}/images/event-roguelike-sarkaz.png` },
+   { id: 'preview-concert-2024-ii', text: 'Ambience Synesthesia 2024 II', bgImage: `${process.env.PUBLIC_URL}/images/event-concert-2024-ii.jpg` },
+   { id: 'preview-dungeon-meshi', text: '테라밥', bgImage: `${process.env.PUBLIC_URL}/images/event-dungeon-meshi.jpg`, link: 'https://gall.dcinside.com/m/mibj/5436645' },
+   { id: 'preview-moon', text: '아름다운때에 달을 맞이한다', bgImage: `${process.env.PUBLIC_URL}/images/event-moon.jpg`, link: 'https://gall.dcinside.com/m/mibj/5459774' },
+   { id: 'preview-black-money-rerun', text: '부정축재 재개방', bgImage: `${process.env.PUBLIC_URL}/images/event-black-money-rerun.jpg`, link: 'https://gall.dcinside.com/m/mibj/5459920' },
+   { id: 'preview-vector', text: '벡터 브레이크스루', bgImage: `${process.env.PUBLIC_URL}/images/event-vector-breakthrough.jpg`, link: 'https://gall.dcinside.com/m/mibj/5461517' },
+   { id: 'preview-west', text: '해 지는 곳을 따라서', bgImage: `${process.env.PUBLIC_URL}/images/event-west.jpg`, link: 'https://gall.dcinside.com/m/mibj/5462923' },
+   { id: 'preview-ggozzil', text: '벨벳의 폭로자들', bgImage: `${process.env.PUBLIC_URL}/images/event-ggozzil.jpg` },
+   { id: 'preview-stronghold', text: '방어협정', bgImage: `${process.env.PUBLIC_URL}/images/event-stronghold.jpg` },
+   { id: 'preview-wife-rerun', text: '츠빌링슈튀르메의 가을 재개방', bgImage: `${process.env.PUBLIC_URL}/images/event-wife-rerun.jpg` },
  ];
 
  return (
