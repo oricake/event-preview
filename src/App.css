@@ -7,115 +7,140 @@
 header {
   position: relative;
   z-index: 10;
-  margin-bottom: 2rem; /* 메인 콘텐츠와 헤더 간의 간격 추가 */
+  margin-bottom: 0; /* 아래 여백 제거 */
+  padding: 1rem;
+  background-color: #1a1a1a;
+  background-image: 
+    radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 8px 8px;
+  background-position: 0 0, 4px 4px;
+  background-repeat: repeat;
 }
 
-header .flex {
-  display: flex;
-  justify-content: flex-end; /* 버튼들을 오른쪽 끝으로 배치 */
-  align-items: center;
-  gap: 2rem; /* 버튼 간 간격 */
+header .content-wrapper {
+  background: rgba(26, 26, 26, 0.9);
+  padding: 1rem;
+  border-radius: 8px;
+  color: white;
 }
 
-header a {
+/* 버튼 기본 스타일 */
+.header-button {
   display: inline-block;
-  text-decoration: none; /* 밑줄 제거 */
-  position: relative; /* 내부 애니메이션 효과를 위한 position 설정 */
-  padding: 0.75rem 2rem;
-  background-color: rgba(255, 255, 255, 0.8); /* 기본 배경색 */
-  border-radius: 9999px; /* 버튼 모서리를 둥글게 */
-  overflow: hidden; /* 내부 애니메이션이 경계를 넘지 않도록 설정 */
-  transition: transform 0.3s ease; /* 버튼 크기 확대 효과 */
+  position: relative;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-header a:hover {
-  transform: scale(1.05); /* 호버 시 약간 확대 */
+/* 버튼 호버 및 터치 애니메이션 */
+.header-button:hover,
+.header-button.active {
+  transform: scale(1.05);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* 버튼 내부 애니메이션 효과 */
-header a::before {
+.header-button:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 버튼 밑줄 효과 */
+.header-button::after {
   content: '';
-  position: absolute;
-  top: 0;
-  left: -100%; /* 처음에는 버튼 밖에서 시작 */
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #4a90e2;
+  transition: width 0.3s ease;
+}
+
+.header-button:hover::after,
+.header-button.active::after {
   width: 100%;
-  height: 100%;
-  background-color: rgba(112, 112, 112, 0.2); /* 애니메이션 배경색 (파란빛 투명) */
-  z-index: 0;
-  transition: all 0.4s ease; /* 애니메이션 전환 효과 */
 }
 
-header a:hover::before {
-  left: 0; /* 버튼 전체를 채우도록 이동 */
-}
-
-/* 버튼 텍스트 스타일 */
-header a span {
-  position: relative; /* 텍스트가 애니메이션 위로 올라오도록 설정 */
-  z-index: 1;
-  color: #000;
-  font-weight: 600;
-}
-
-/* Menu Item 스타일 */
+/* menu-item 스타일 */
 .menu-item {
   position: relative;
+  width: 100%; /* 가로 폭 채우기 */
+  height: 50vh; /* 데스크톱 높이 */
   overflow: hidden;
-  height: 480px;
   display: flex;
   align-items: center;
-  z-index: 1; /* 메뉴가 헤더와 겹치지 않도록 설정 */
+  justify-content: center;
+  z-index: 1;
+  margin: 0; /* 모든 여백 제거 */
+  padding: 0; /* 추가 패딩 제거 */
+  box-sizing: border-box; /* 여백 계산 포함 */
 }
 
+/* 배너 간 여백 제거 */
+main {
+  margin: 0; /* 메인 컨테이너 여백 제거 */
+  padding: 0; /* 내부 패딩 제거 */
+}
+
+.menu-item + .menu-item {
+  margin-top: 0; /* 배너 간의 여백 제거 */
+}
+
+/* 배경 이미지 스타일 */
 .menu-item .bg-image {
   position: absolute;
   inset: 0;
-  filter: grayscale(100%);
-  opacity: 0.3;
-  transition: opacity 0.3s ease, filter 0.3s ease; /* 배경 전환 효과 */
-  z-index: 0; /* 배경 이미지를 텍스트 뒤로 배치 */
+  background-size: cover; /* 이미지를 컨테이너에 맞게 채움 */
+  background-position: center; /* 이미지 중심부 기준으로 정렬 */
+  background-repeat: no-repeat; /* 반복 제거 */
+  filter: grayscale(100%); /* 기본 회색 처리 */
+  transition: opacity 0.3s ease, filter 0.3s ease; /* 전환 효과 추가 */
+  z-index: 0;
 }
 
-.menu-item:hover .bg-image {
-  filter: grayscale(0%);
-  opacity: 0.8; /* 호버 시 배경 강조 */
+.menu-item:hover .bg-image,
+.menu-item.active .bg-image {
+  filter: grayscale(0%); /* 컬러 복원 */
+  opacity: 1;
 }
 
+/* 메뉴 텍스트 */
 .menu-text {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   color: white;
   text-shadow: 
     2px 2px 4px rgba(0, 0, 0, 0.5),
-    0 0 20px rgba(255, 255, 255, 0.3); /* 텍스트 그림자 */
-  position: absolute; /* 각 칸의 좌상단에 고정 */
+    0 0 20px rgba(255, 255, 255, 0.3);
+  position: absolute;
   top: 1.5rem;
   left: 2rem;
   letter-spacing: -0.02em;
   opacity: 0.9;
-  transition: transform 0.3s ease, opacity 0.3s ease; /* 호버 효과 */
-  z-index: 1; /* 배경 이미지 위로 배치 */
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 1;
 }
 
-.menu-item:hover .menu-text {
-  transform: scale(1.02); /* 호버 시 약간 확대 */
-  opacity: 1; /* 호버 시 불투명도 증가 */
-}
+/* 모바일 반응형 스타일 */
+@media (max-width: 640px) {
+  .menu-item {
+    height: 20vh; /* 모바일에서 높이를 줄임 */
+  }
 
-/* 밑줄 제거 */
-.menu-text:hover {
-  text-decoration: none; /* 불필요한 밑줄 방지 */
-}
+  .menu-item .bg-image {
+    background-size: cover; /* 비율 유지하며 채우기 */
+    background-position: center; /* 중심부 정렬 */
+  }
 
-/* Global 스타일 */
-body {
-  margin: 0;
-  font-family: 'Arial', sans-serif; /* 기본 폰트 설정 */
-  background-color: #fff; /* 전체 배경 흰색 */
-}
-
-.main {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 2rem;
+  .menu-text {
+    font-size: 1.1rem; /* 텍스트 크기 축소 */
+    left: 1rem; /* 여백 조정 */
+    top: 1rem; /* 위쪽 여백 추가 */
+  }
 }
