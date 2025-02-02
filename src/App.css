@@ -40,7 +40,6 @@ header .content-wrapper {
   transition: color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* 버튼 호버 및 터치 애니메이션 */
 .header-button:hover,
 .header-button.active {
   transform: scale(1.05);
@@ -79,34 +78,33 @@ header .content-wrapper {
   z-index: 1;
   margin: 0; /* 모든 여백 제거 */
   padding: 0; /* 추가 패딩 제거 */
-  box-sizing: border-box; /* 여백 계산 포함 */
+  box-sizing: border-box;
 }
 
-/* 배너 간 여백 제거 */
 main {
-  margin: 0; /* 메인 컨테이너 여백 제거 */
-  padding: 0; /* 내부 패딩 제거 */
+  margin: 0;
+  padding: 0;
 }
 
 .menu-item + .menu-item {
-  margin-top: 0; /* 배너 간의 여백 제거 */
+  margin-top: 0; /* 배너 간 여백 제거 */
 }
 
-/* 배경 이미지 스타일 */
+/* 배경 이미지 스타일 (데스크톱) */
 .menu-item .bg-image {
   position: absolute;
   inset: 0;
-  background-size: cover; /* 이미지를 컨테이너에 맞게 채움 */
-  background-position: center; /* 이미지 중심부 기준으로 정렬 */
-  background-repeat: no-repeat; /* 반복 제거 */
-  filter: grayscale(100%); /* 기본 회색 처리 */
-  transition: opacity 0.3s ease, filter 0.3s ease; /* 전환 효과 추가 */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: grayscale(100%);
+  transition: opacity 0.3s ease, filter 0.3s ease;
   z-index: 0;
 }
 
 .menu-item:hover .bg-image,
 .menu-item.active .bg-image {
-  filter: grayscale(0%); /* 컬러 복원 */
+  filter: grayscale(0%);
   opacity: 1;
 }
 
@@ -130,17 +128,25 @@ main {
 /* 모바일 반응형 스타일 */
 @media (max-width: 640px) {
   .menu-item {
-    height: 20vh; /* 모바일에서 높이를 줄임 */
-  }
-
-  .menu-item .bg-image {
-    background-size: cover; /* 비율 유지하며 채우기 */
-    background-position: center; /* 중심부 정렬 */
+    height: 20vh; /* 모바일 높이 조정 */
   }
 
   .menu-text {
-    font-size: 1.1rem; /* 텍스트 크기 축소 */
-    left: 1rem; /* 여백 조정 */
-    top: 1rem; /* 위쪽 여백 추가 */
+    font-size: 1.1rem;
+    left: 1rem;
+    top: 1rem;
+  }
+
+  /* 모바일에서는 기본 상태에 그레이스케일을 제거하여 컬러 이미지 표시 */
+  .menu-item .bg-image {
+    filter: none;
+    transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease;
+  }
+
+  /* 터치(Active) 시 효과: 이미지 축소 및 밝기 감소 */
+  .menu-item:active .bg-image,
+  .menu-item.active .bg-image {
+    transform: scale(0.98);
+    filter: brightness(80%);
   }
 }

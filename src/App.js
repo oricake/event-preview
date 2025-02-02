@@ -1,11 +1,76 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import './App.css';
 
+/* Header 버튼 컴포넌트 */
+const HeaderButton = ({ href, label, id, activeId, onPointerDown, onPointerUp }) => {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={label}
+      className={`header-button ${activeId === id ? 'active' : ''}`}
+      onPointerDown={() => onPointerDown(id)}
+      onPointerUp={onPointerUp}
+    >
+      <span data-hover={label}>{label}</span>
+    </a>
+  );
+};
+
+/* Header 컴포넌트 */
+const Header = ({ activeId, onPointerDown, onPointerUp }) => (
+  <header className="p-4 mb-8">
+    <div className="content-wrapper w-full">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-4">
+        <h1 className="text-3xl font-bold">명일방주 이벤트 미래시 (없는건 없는거)</h1>
+        <div className="flex gap-8">
+          <HeaderButton
+            href="https://gall.dcinside.com/m/mibj/4713556"
+            label="가챠 요약"
+            id="gacha"
+            activeId={activeId}
+            onPointerDown={onPointerDown}
+            onPointerUp={onPointerUp}
+          />
+          <HeaderButton
+            href="https://gall.dcinside.com/m/mibj/3997217"
+            label="파밍 요약"
+            id="farming"
+            activeId={activeId}
+            onPointerDown={onPointerDown}
+            onPointerUp={onPointerUp}
+          />
+        </div>
+      </div>
+    </div>
+  </header>
+);
+
+/* MenuItem 컴포넌트 */
+const MenuItem = ({ item, activeId, onPointerDown, onPointerUp }) => {
+  return (
+    <a
+      href={item.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={item.text}
+      className={`menu-item ${activeId === item.id ? 'active' : ''}`}
+      onPointerDown={() => onPointerDown(item.id)}
+      onPointerUp={onPointerUp}
+    >
+      <div
+        className="bg-image"
+        style={{ backgroundImage: `url(${item.bgImage})` }}
+      />
+      <div className="menu-text">{item.text}</div>
+    </a>
+  );
+};
+
 function App() {
-  const [hoveredItem, setHoveredItem] = useState(null);
-  const [touchedItem, setTouchedItem] = useState(null);
-  const [activeButton, setActiveButton] = useState(null);
-  const timeoutRef = useRef(null); // 타이머 관리용 ref 추가
+  const [activeId, setActiveId] = useState(null);
+  const timeoutRef = useRef(null);
 
   const menuItems = [
     { id: 'preview-nymph', text: '용광로의 부활', bgImage: `${process.env.PUBLIC_URL}/images/event-nymph.jpg`, link: 'https://gall.dcinside.com/m/mibj/5212701' },
@@ -26,84 +91,39 @@ function App() {
     { id: 'preview-lunear-moon-2025', text: '상견환', bgImage: `${process.env.PUBLIC_URL}/images/event-lunar-moon-2025.jpg`, link: 'https://gall.dcinside.com/m/mibj/5464489' },
   ];
 
-  const handleTouchStart = (id) => {
-    // 기존 타이머 정리
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-  
-    // 터치 시작 시 상태 업데이트
-    setTouchedItem(id);
-    setActiveButton(id);
-  
-    // 일정 시간 후 상태 초기화 (600ms)
+  const handlePointerDown = useCallback((id) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setActiveId(id);
+    // 600ms 후에 활성 상태 해제 (터치 효과 유지)
     timeoutRef.current = setTimeout(() => {
-      setTouchedItem(null);
-      setActiveButton(null);
+      setActiveId(null);
     }, 600);
-  };
-  
-  const handleTouchEnd = () => {
-    // 터치가 끝난 직후 상태 초기화
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    setTouchedItem(null);
-    setActiveButton(null);
-  };
+  }, []);
+
+  const handlePointerUp = useCallback(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setActiveId(null);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <header className="relative p-4 mb-8">
-        <div className="content-wrapper w-full">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center sm:justify-between gap-4">
-            <h1 className="text-3xl font-bold">명일방주 이벤트 미래시 (없는건 없는거)</h1>
-            <div className="flex gap-8">
-              <a
-                href="https://gall.dcinside.com/m/mibj/4713556"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`header-button ${activeButton === 'gacha' ? 'active' : ''}`}
-                onTouchStart={() => handleTouchStart('gacha')}
-                onTouchEnd={handleTouchEnd}
-              >
-                <span data-hover="가챠 요약">가챠 요약</span>
-              </a>
-              <a
-                href="https://gall.dcinside.com/m/mibj/3997217"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={`header-button ${activeButton === 'farming' ? 'active' : ''}`}
-                onTouchStart={() => handleTouchStart('farming')}
-                onTouchEnd={handleTouchEnd}
-              >
-                <span data-hover="파밍 요약">파밍 요약</span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </header>
-
+      <Header activeId={activeId} onPointerDown={handlePointerDown} onPointerUp={handlePointerUp} />
       <main className="w-full mx-auto mt-8 px-4 sm:px-2">
         <div className="grid grid-cols-1 gap-4">
           {menuItems.map((item) => (
-            <a
-              href={item.link}
-              target="_blank"
-              rel="noopener noreferrer"
+            <MenuItem
               key={item.id}
-              className={`menu-item relative w-full h-[50vh] sm:h-[40vh] cursor-pointer block ${touchedItem === item.id ? 'active' : ''}`}
-              onTouchStart={() => handleTouchStart(item.id)}
-              onTouchEnd={handleTouchEnd}
-            >
-              <div
-                className="bg-image"
-                style={{
-                  backgroundImage: `url(${item.bgImage})`,
-                }}
-              />
-              <div className="menu-text">{item.text}</div>
-            </a>
+              item={item}
+              activeId={activeId}
+              onPointerDown={handlePointerDown}
+              onPointerUp={handlePointerUp}
+            />
           ))}
         </div>
       </main>
